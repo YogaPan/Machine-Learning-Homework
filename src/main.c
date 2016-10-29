@@ -5,15 +5,6 @@
  * Implement both incremental and batch versions of Widrow-Holf
  * learning rule to classify 0 and 1.
  *
- * Tips:
- * ==================
- *
- * Use a Single Neuron with 30 inputs in the recognition system.
- *
- * Input Example:
- * ===================
- * P = [-1 1 1 1 1 -1 1 -1 -1 -1 -1 1 1 -1 -1 -1 -1 1 1 -1 -1 -1 -1 1 -1 1 1 1 1 -1].
- *
  * Output:
  * ===================
  *
@@ -42,6 +33,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 /* 6x5 grid. */
 #define DOT_NUMBER 30
@@ -156,16 +148,61 @@ static const int test_set[4][DOT_NUMBER] = {
 
 int main(void)
 {
+	struct windrow_holf_learner *whl;
+
+	init_windrow_holf_learner(whl);
+	train_windorw_holf_learner(whl);
 
 	return 0;
 }
 
-void widrow_holf(void)
+struct windrow_holf_learner {
+	double weight[DOT_NUMBER];
+	double biase;
+	double leaning_rate;
+};
+
+void init_winrow_holf_learner(struct windrow_holf_learner *whl)
 {
-	return;
+	int i;
+
+	whl = malloc(sizeof(*whl));
+	if (whl == NULL)
+		return;
+
+	whl->biase = 0;
+	for (i = 0; i < DOT_NUMBER; i++) {
+		srand(time(NULL));
+		whl->weight[i] = (double)rand() / (double)RAND_MAX;
+	}
 }
 
-void incremental(void)
+void train_widrow_holf(struct windrow_holf_learner *whl)
 {
+	int i, j;
+	double sum, output;
+
+	/* iterate all training set. */
+	for (i = 0; i < 8; i++) {
+
+		/* Get sum from weight and input. */
+		sum = 0;
+		for (j = 0; j < DOT_NUMBER; j++) {
+			sum += whl->weight[j] * training_set[i][j];
+		}
+
+		/* Get output value. */
+		output = sum - whl->baise;
+		if (output < 0)
+			output = -1;
+		if (output >= 0)
+			output = 1;
+
+		/* Update weights. */
+		for (j = 0; j < DOT_NUMBER; j++) {
+			whl->weight[j] = whl->leaning_rate * (target - output) * training_set[i][j];
+		}
+	}
+
 	return;
 }

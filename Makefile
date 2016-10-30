@@ -1,13 +1,16 @@
 CC = gcc
 CFLAGS = -Wall
-exec = main
+exec = ./bin/main
 
 .PHONY: all tags clean
 
-all: $(exec)
+all: ./bin/main
 
-main: src/main.c
+./bin/main: src/main.c
 	$(CC) $(CFLAGS) $^ -o $@
+
+run: ./bin/main
+	@./main
 
 tags:
 	ctags -R *

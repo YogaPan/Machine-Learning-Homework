@@ -230,6 +230,13 @@ void test_neuron(struct neuron *ne)
 	int i;
 	int predict_output;
 
+	for (i = 0; i < TRAINING_NUMBER; i++) {
+		predict_output = predict(ne, training_set[i]);
+		printf("predict: %d, answer:  %d\n", predict_output, training_answer[i]);
+	}
+
+	printf("\n\n");
+
 	for (i = 0; i < TEST_NUMBER; i++) {
 		predict_output = predict(ne, test_set[i]);
 		printf("predict: %d, answer:  %d\n", predict_output, test_answer[i]);
@@ -253,8 +260,7 @@ int main(void)
 	train_neuron(whb);
 
 	test_neuron(whi);
-	test_neuron(whb);
-	printf("done!\n");
+	/* test_neuron(whb); */
 
 	/* Free memoru space. */
 	free_neuron(whi);

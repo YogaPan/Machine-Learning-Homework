@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -Wall
 exec = ./bin/main
 
-.PHONY: all tags clean
+.PHONY: all run tags clean
 
 all: ./bin/main
 
@@ -10,7 +10,7 @@ all: ./bin/main
 	$(CC) $(CFLAGS) $^ -o $@
 
 run: ./bin/main
-	@./main
+	@./bin/main
 
 tags:
 	ctags -R *

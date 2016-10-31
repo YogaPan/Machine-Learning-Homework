@@ -7,7 +7,7 @@ exec = ./bin/main
 all: ./bin/main
 
 ./bin/main: src/main.c
-	$(CC) $(CFLAGS) $^ -o $@
+	@$(CC) $(CFLAGS) $^ -o $@
 
 run: ./bin/main
 	@./bin/main

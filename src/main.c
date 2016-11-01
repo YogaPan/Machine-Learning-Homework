@@ -268,14 +268,19 @@ void test_neuron(struct neuron *ne)
 int main(void)
 {
 	/* Windrow_holf increnment and batch version. */
-	struct neuron *whi;
+	struct neuron *ne_1, *ne_2;
 
-	whi = init_neuron();
+	ne_1 = init_neuron();
+	ne_2 = init_neuron();
 
-	train_neuron(whi, 0.001, 1000);
-	test_neuron(whi);
+	train_neuron(ne_1, 0.00001, 1000);
+	test_neuron(ne_1);
 
-	free_neuron(whi);
+	train_neuron(ne_2, 0.1, 1000);
+	test_neuron(ne_2);
+
+	free_neuron(ne_1);
+	free_neuron(ne_2);
 
 	return 0;
 }
